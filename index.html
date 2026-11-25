@@ -1037,8 +1037,9 @@
         }
         if (headerIdx === -1) headerIdx = 0;
 
-        const headers = rows[headerIdx].map(h => String(h).trim());
+const headers = rows[headerIdx].map(h => String(h).trim());
         const repColIdx = headers.findIndex(h => h.includes("영업사원"));
+        const bizColIdx = headers.findIndex(h => h.includes("사업자"));
         const pharmColIdx = headers.findIndex(h => h === "거래처명" || h.includes("거래처"));
         const brandColIdx = headers.findIndex(h => h.includes("브랜드"));
         const codeColIdx = headers.findIndex(h => h === "품목코드" || h.includes("품목코드"));
