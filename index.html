@@ -1074,6 +1074,23 @@ const headers = rows[headerIdx].map(h => String(h).trim());
           return;
         }
 
+        // 동일 거래처명 + 다른 사업자등록번호 자동 구분 맵 생성
+        const nameToBizSet = {};
+        if (bizColIdx !== -1) {
+          for (let r = headerIdx + 1; r < rows.length; r++) {
+            if (repColIdx !== -1) {
+              const repName = String(rows[r][repColIdx] || "").trim();
+              if (repName && repName !== currentUserSession) continue;
+            }
+            const pN = String(rows[r][pharmColIdx] || "").trim();
+            const bN = String(rows[r][bizColIdx] || "").replace(/\D/g, "");
+            if (pN && bN) {
+              if (!nameToBizSet[pN]) nameToBizSet[pN] = new Set();
+              nameToBizSet[pN].add(bN);
+            }
+          }
+        }
+
         const latestMonthCol = monthColumns[monthColumns.length - 1];
         const prevMonthCol = monthColumns.length >= 2 ? monthColumns[monthColumns.length - 2] : null;
         const calcCols = monthColumns.length > 24
@@ -1090,11 +1107,18 @@ const headers = rows[headerIdx].map(h => String(h).trim());
         const reverseItemAlerts = {};
         const itemOrderMatrix = {};
 
-        for (let r = headerIdx + 1; r < rows.length; r++) {
+for (let r = headerIdx + 1; r < rows.length; r++) {
           const row = rows[r];
-          const pharmName = String(row[pharmColIdx] || "").trim();
+          let pharmName = String(row[pharmColIdx] || "").trim();
           const itemCode = String(row[codeColIdx] || "").trim();
           if (!pharmName || !itemCode) continue;
+
+          if (bizColIdx !== -1 && nameToBizSet[pharmName] && nameToBizSet[pharmName].size > 1) {
+            const bizDigits = String(row[bizColIdx] || "").replace(/\D/g, "");
+            if (bizDigits.length >= 4) {
+              pharmName = `${pharmName} (${bizDigits.slice(-4)})`;
+            }
+          }
 
           if (repColIdx !== -1) {
             const repName = String(row[repColIdx] || "").trim();
