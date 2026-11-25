@@ -1140,11 +1140,11 @@
             }
           }
 
-          if (!salesSummaryByPharm[pharmName]) {
+         if (!salesSummaryByPharm[pharmName]) {
             salesSummaryByPharm[pharmName] = { netTotal: 0, excludedTotal: 0, items: [] };
           }
           if (latestAmt !== 0) {
-            if (isExcludedCode) {
+            if (isExcludedCode && latestAmt > 0) {
               salesSummaryByPharm[pharmName].excludedTotal += latestAmt;
             } else {
               salesSummaryByPharm[pharmName].netTotal += latestAmt;
@@ -1153,7 +1153,7 @@
               code: itemCode,
               name: itemName,
               amount: latestAmt,
-              excluded: isExcludedCode
+              excluded: isExcludedCode && latestAmt > 0
             });
           }
 
