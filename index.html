@@ -1741,8 +1741,8 @@ for (let r = headerIdx + 1; r < rows.length; r++) {
         const rankNum = list.indexOf(item) + 1;
         const isNegative = item.netTotal < 0;
         const isZero = item.netTotal === 0;
-        const isUnder11 = item.netTotal >= 1 && item.netTotal <= 100000;
-        const isUnder55 = item.netTotal >= 100001 && item.netTotal <= 500000;
+        const isUnder11 = item.netTotal >= 1 && item.netTotal < 100000;
+        const isUnder55 = item.netTotal >= 100001 && item.netTotal < 500000;
 
         let badgeHtml = "";
         if (isNegative) {
