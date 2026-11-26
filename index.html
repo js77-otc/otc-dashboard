@@ -1717,8 +1717,8 @@ for (let r = headerIdx + 1; r < rows.length; r++) {
       const kw = document.getElementById("rankingSearchInput").value.trim().toLowerCase();
 
       const filtered = list.filter(item => {
-        if (currentRankFilter === "UNDER_55" && (item.netTotal < 100001 || item.netTotal > 500000)) return false;
-        if (currentRankFilter === "UNDER_11" && (item.netTotal < 1 || item.netTotal > 100000)) return false;
+        if (currentRankFilter === "UNDER_55" && (item.netTotal < 100001 || item.netTotal >= 500000)) return false;
+        if (currentRankFilter === "UNDER_11" && (item.netTotal < 1 || item.netTotal >= 100000)) return false;
         if (currentRankFilter === "ZERO" && item.netTotal > 0) return false;
         if (kw && !item.pharmacy.toLowerCase().includes(kw)) return false;
         return true;
