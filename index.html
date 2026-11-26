@@ -1705,8 +1705,8 @@ for (let r = headerIdx + 1; r < rows.length; r++) {
 
       const list = appData.rankingList;
       const cntAll = list.length;
-      const cnt55 = list.filter(item => item.netTotal >= 100001 && item.netTotal <= 500000).length;
-      const cnt11 = list.filter(item => item.netTotal >= 1 && item.netTotal <= 100000).length;
+      const cnt55 = list.filter(item => item.netTotal >= 100001 && item.netTotal < 500000).length;
+      const cnt11 = list.filter(item => item.netTotal >= 1 && item.netTotal < 100000).length;
       const cntZero = list.filter(item => item.netTotal <= 0).length;
 
       document.getElementById("rankCntAll").textContent = cntAll;
